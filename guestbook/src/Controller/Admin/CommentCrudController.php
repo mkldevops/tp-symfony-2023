@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Comment;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -39,6 +40,7 @@ class CommentCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
      {
+        yield Field::new('id')->hideOnForm();
         yield AssociationField::new('conference');
         yield TextField::new('author');
         yield EmailField::new('email');
@@ -53,7 +55,7 @@ class CommentCrudController extends AbstractCrudController
             'html5' => true,
             'years' => range(date('Y'), date('Y') - 5),
             'widget' => 'single_text',
-        ]);
+        ])->hideOnForm();
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdAt->setFormTypeOption('disabled', true);
         } else {
